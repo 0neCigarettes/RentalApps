@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.rentalapps.BuildConfig;
 import com.android.rentalapps.R;
 import com.android.rentalapps.features.JasaRental.product.model.ProductModel;
 import com.android.rentalapps.features.JasaRental.product.presenter.ProductPresenter;
@@ -296,7 +297,7 @@ public class ProductActivity extends AppCompatActivity implements IProductView, 
             }
             if (photoFile != null) {
                 Uri apkURI = FileProvider.getUriForFile(Objects.requireNonNull(getApplicationContext()),
-                        "com.android.rentalapps" + ".provider", photoFile);
+                        BuildConfig.APPLICATION_ID + ".provider", photoFile);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, apkURI);
                 startActivityForResult(cameraIntent, CameraR_PP);
             }

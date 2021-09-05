@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "210507744881",
+    "project_id": "rental-apps-2b99e",
+    "storage_bucket": "rental-apps-2b99e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210507744881:android:43118fd229fd2f5da97dd0",
+        "android_client_info": {
+          "package_name": "com.android.rentalapps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210507744881-o8vccol661kr3tr5eebfpich6v4hjnti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSrix46EPc593qAtn8CDVsLSeBUfWMhiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210507744881-o8vccol661kr3tr5eebfpich6v4hjnti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

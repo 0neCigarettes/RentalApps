@@ -63,8 +63,6 @@ public class UpdateJasaRental extends AppCompatActivity implements IUpdateJasaVi
 
     @BindView(R.id.dfullname)
     TextView mFullname;
-    @BindView(R.id.dnik)
-    TextView mNik;
     @BindView(R.id.NamaJasaRental)
     TextInputEditText mFullnameUser;
     @BindView(R.id.phone)
@@ -131,7 +129,6 @@ public class UpdateJasaRental extends AppCompatActivity implements IUpdateJasaVi
         }
 
         mFullname.setText(mProfile.getFullname());
-        mNik.setText(mProfile.getNik());
         mFullnameUser.setText(mProfile.getFullname());
         mPhone.setText(mProfile.getPhone());
         mEmail.setText(mProfile.getEmail());

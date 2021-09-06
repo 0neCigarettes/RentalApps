@@ -64,7 +64,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/t_nik"
+        android:id="@+id/t_fullname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -72,31 +72,6 @@
         android:layout_marginRight="15dp"
         app:boxStrokeColor="@color/black"
         app:layout_constraintTop_toBottomOf="@+id/desc">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nik"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_fiber_pin_black_24dp"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/black"
-            android:hint="Nomor Induk Kependudukan..."
-            android:inputType="number"
-            android:maxLength="18"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="14dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/t_fullname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        app:boxStrokeColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/t_nik">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/fullname"

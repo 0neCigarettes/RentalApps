@@ -83,7 +83,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginTop="84dp"
                 android:inputType="textCapSentences"
-                android:text="TextView"
+                android:text="fullname"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -91,19 +91,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/rl_profile_pic_container"
-                tools:ignore="MissingConstraints" />
-
-            <TextView
-                android:id="@+id/dnik"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:inputType="textCapSentences"
-                android:text="TextView"
-                android:textColor="@color/white"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dfullname"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

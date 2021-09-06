@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class RegisterJasaRental extends AppCompatActivity {
 
     Button doRegist, bLogin;
-    TextInputEditText bNik, bFullname, bUsername, bPassword, bPhone, bEmail, bPlat;
+    TextInputEditText bFullname, bUsername, bPassword, bPhone, bEmail, bPlat;
     ProgressDialog progressDialog;
 
     private RequestQueue mRequestQueue;
@@ -42,8 +42,6 @@ public class RegisterJasaRental extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         mRequestQueue = Volley.newRequestQueue(this);
-
-        bNik = (TextInputEditText) findViewById(R.id.nik);
         bFullname = (TextInputEditText) findViewById(R.id.fullname);
         bUsername = (TextInputEditText) findViewById(R.id.username);
         bPassword = (TextInputEditText) findViewById(R.id.password);
@@ -67,7 +65,6 @@ public class RegisterJasaRental extends AppCompatActivity {
         doRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sNik = bNik.getText().toString();
                 String sFullname = bFullname.getText().toString();
                 String sUsername = bUsername.getText().toString();
                 String sPassword = bPassword.getText().toString();
@@ -76,11 +73,8 @@ public class RegisterJasaRental extends AppCompatActivity {
                 String sAddress = null;
                 String sProfilePhoto = null;
                 String sStatus = "off";
-                String sPlat = null;
 
-                if (sNik.isEmpty()) {
-                    StyleableToast.makeText(RegisterJasaRental.this, "NIK tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
-                }else if (sFullname.isEmpty()) {
+                if (sFullname.isEmpty()) {
                     StyleableToast.makeText(RegisterJasaRental.this, "Nama jasa rental tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
                 } else if (sUsername.isEmpty()) {
                     StyleableToast.makeText(RegisterJasaRental.this, "Username tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
@@ -91,17 +85,16 @@ public class RegisterJasaRental extends AppCompatActivity {
                 } else if (sEmail.isEmpty()) {
                     StyleableToast.makeText(RegisterJasaRental.this, "Email telepon tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
                 }else {
-                    registDriver(sNik, sFullname, sUsername, sPassword, sPhone, sEmail, sAddress, sProfilePhoto, sPlat, sStatus);
+                    registDriver(sFullname, sUsername, sPassword, sPhone, sEmail, sAddress, sProfilePhoto, sStatus);
                 }
             }
         });
     }
 
-    public void registDriver(String nik, String fullname, String username, String password, String phone, String email, String address, String profilephoto, String plat, String status) {
+    public void registDriver( String fullname, String username, String password, String phone, String email, String address, String profilephoto, String status) {
 
         HashMap<String, String> params = new HashMap<String, String>();
 
-        params.put("nik", nik);
         params.put("fullname", fullname);
         params.put("username", username);
         params.put("password", password);
@@ -110,7 +103,6 @@ public class RegisterJasaRental extends AppCompatActivity {
         params.put("address", address);
         params.put("profilephoto", profilephoto);
         params.put("role", "2");
-        params.put("plat", plat);
         params.put("status", "off");
         progressDialog.setTitle("Mohon tunggu sebentar...");
         showDialog();

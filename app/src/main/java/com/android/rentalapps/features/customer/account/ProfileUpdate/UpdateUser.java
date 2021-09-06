@@ -129,7 +129,6 @@ public class UpdateUser extends AppCompatActivity implements IProfileView {
         }
 
         mFullname.setText(mProfile.getFullname());
-        mNik.setText(mProfile.getNik());
         mFullnameUser.setText(mProfile.getFullname());
         mPhone.setText(mProfile.getPhone());
         mEmail.setText(mProfile.getEmail());

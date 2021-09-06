@@ -6,8 +6,6 @@ public class User {
 
     @SerializedName("id")
     String id;
-    @SerializedName("nik")
-    String nik;
     @SerializedName("fullname")
     String fullname;
     @SerializedName("username")
@@ -45,14 +43,6 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getNik() {
-        return nik;
-    }
-
-    public void setNik(String nik) {
-        this.nik = nik;
     }
 
     public String getFullname() {

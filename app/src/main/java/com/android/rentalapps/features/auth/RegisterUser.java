@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class RegisterUser extends AppCompatActivity {
 
     Button doRegist, bLogin;
-    TextInputEditText bNik, bFullname, bUsername, bPassword, bPhone, bEmail;
+    TextInputEditText bFullname, bUsername, bPassword, bPhone, bEmail;
     ProgressDialog progressDialog;
 
     private RequestQueue mRequestQueue;
@@ -43,7 +43,6 @@ public class RegisterUser extends AppCompatActivity {
 
         mRequestQueue = Volley.newRequestQueue(this);
 
-        bNik = (TextInputEditText) findViewById(R.id.nik);
         bFullname = (TextInputEditText) findViewById(R.id.fullname);
         bUsername = (TextInputEditText) findViewById(R.id.username);
         bPassword = (TextInputEditText) findViewById(R.id.password);
@@ -65,8 +64,7 @@ public class RegisterUser extends AppCompatActivity {
 
         doRegist.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String sNik = bNik.getText().toString();
+            public void onClick(View v) {;
                 String sFullname = bFullname.getText().toString();
                 String sUsername = bUsername.getText().toString();
                 String sPassword = bPassword.getText().toString();
@@ -74,11 +72,8 @@ public class RegisterUser extends AppCompatActivity {
                 String sEmail = bEmail.getText().toString();
                 String sAddress = null;
                 String sProfilePhoto = null;
-                String sPlat = null;
 
-                if (sNik.isEmpty()) {
-                    StyleableToast.makeText(RegisterUser.this, "NIK tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
-                } else if (sFullname.isEmpty()) {
+                if (sFullname.isEmpty()) {
                     StyleableToast.makeText(RegisterUser.this, "Nama lengkap tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
                 } else if (sUsername.isEmpty()) {
                     StyleableToast.makeText(RegisterUser.this, "Username tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
@@ -89,17 +84,16 @@ public class RegisterUser extends AppCompatActivity {
                 } else if (sEmail.isEmpty()) {
                     StyleableToast.makeText(RegisterUser.this, "Email tidak boleh di kosongkan...", R.style.toastStyleWarning).show();
                 } else {
-                    registUser(sNik, sFullname, sUsername, sPassword, sPhone, sEmail, sAddress, sProfilePhoto, sPlat);
+                    registUser( sFullname, sUsername, sPassword, sPhone, sEmail, sAddress, sProfilePhoto);
                 }
             }
         });
     }
 
-    public void registUser(String nik, String fullname, String username, String password, String phone, String email, String address, String profilephoto, String plat) {
+    public void registUser( String fullname, String username, String password, String phone, String email, String address, String profilephoto) {
 
         HashMap<String, String> params = new HashMap<String, String>();
 
-        params.put("nik", nik);
         params.put("fullname", fullname);
         params.put("username", username);
         params.put("password", password);
@@ -108,7 +102,6 @@ public class RegisterUser extends AppCompatActivity {
         params.put("address", address);
         params.put("profilephoto", profilephoto);
         params.put("role", "1");
-        params.put("plat", plat);
 
         progressDialog.setTitle("Mohon tunggu sebentar...");
         showDialog();

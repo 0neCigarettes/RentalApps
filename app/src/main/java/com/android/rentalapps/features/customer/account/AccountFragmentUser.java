@@ -37,8 +37,6 @@ public class AccountFragmentUser extends Fragment implements IAccountUserView {
 
     @BindView(R.id.dfullname)
     TextView mFullname;
-    @BindView(R.id.dnik)
-    TextView mNik;
     @BindView(R.id.phone)
     TextView mPhone;
     @BindView(R.id.address)
@@ -76,7 +74,6 @@ public class AccountFragmentUser extends Fragment implements IAccountUserView {
         );
 
         mFullname.setText(mProfile.getFullname());
-        mNik.setText(mProfile.getNik());
         mPhone.setText(mProfile.getPhone());
         mAddress.setText(mProfile.getAddress());
         mEmail.setText(mProfile.getEmail());

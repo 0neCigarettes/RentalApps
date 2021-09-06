@@ -37,8 +37,6 @@ public class AccountFragmentJasaRental extends Fragment implements IAccountJasaV
 
     @BindView(R.id.dfullname)
     TextView dFullname;
-    @BindView(R.id.dnik)
-    TextView dNik;
     @BindView(R.id.phone)
     TextView dPhone;
     @BindView(R.id.address)
@@ -82,7 +80,6 @@ public class AccountFragmentJasaRental extends Fragment implements IAccountJasaV
         );
 
         dFullname.setText(mProfile.getFullname());
-        dNik.setText(mProfile.getNik());
         dPhone.setText(mProfile.getPhone());
         dAddress.setText(mProfile.getAddress());
         mEmail.setText(mProfile.getEmail());

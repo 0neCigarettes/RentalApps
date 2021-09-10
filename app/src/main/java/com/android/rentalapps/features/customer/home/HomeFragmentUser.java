@@ -13,24 +13,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import com.android.rentalapps.ui.SweetDialogs;
-import com.android.rentalapps.features.customer.home.Presenter.UserPresenter;
-import com.android.rentalapps.features.customer.home.ViewHomeUser.IHomeUserView;
-import com.android.rentalapps.features.customer.home.Model.ListJasaModel;
-import com.android.rentalapps.features.customer.katalog.KatalogActivity;
-import com.android.rentalapps.features.customer.order.OrderActivity;
-import com.android.rentalapps.utils.CustomDrawable;
-import com.android.rentalapps.utils.Utils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.rentalapps.R;
 import com.android.rentalapps.features.auth.model.User;
+import com.android.rentalapps.features.customer.home.Presenter.UserPresenter;
+import com.android.rentalapps.features.customer.home.ViewHomeUser.IHomeUserView;
+import com.android.rentalapps.features.customer.katalog.KatalogActivity;
+import com.android.rentalapps.features.customer.order.OrderActivity;
+import com.android.rentalapps.ui.SweetDialogs;
 import com.android.rentalapps.utils.App;
+import com.android.rentalapps.utils.CustomDrawable;
 import com.android.rentalapps.utils.GsonHelper;
 import com.android.rentalapps.utils.Prefs;
+import com.android.rentalapps.utils.Utils;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,14 +42,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -58,16 +64,21 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class HomeFragmentUser extends Fragment implements IHomeUserView {
+public class HomeFragmentUser extends Fragment implements IHomeUserView, ListJasaAdapter.onSelected {
 
+    @BindView(R.id.mListJasa)
+    FloatingActionButton mListJasa;
     @BindView(R.id.mOrderFab)
     FloatingActionButton mOrderFab;
+    @BindView(R.id.list_layout)
+    LinearLayout mListMainLayout;
     @BindView(R.id.find)
     Button findData;
-    private User mProfile;
+    RecyclerView recyclerView;
 
+    private User mProfile;
     private SupportMapFragment supportMapFragment;
-    List<ListJasaModel> mListMarker = new ArrayList<>();
+    List<User> mListMarker = new ArrayList<>();
     List<String> mTitles = new ArrayList<>();
     private LatLng myLocation = new LatLng(0, 0);
     private HashMap<String, HashMap<String, String>> dataInfo = new HashMap<String, HashMap<String, String>>();
@@ -75,18 +86,17 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
     SweetAlertDialog sweetAlertDialog;
     GoogleMap mMaps;
     Marker marker, myLocationMarker;
+    private ListJasaAdapter adapter;
+    private BottomSheetDialog bottomSheetDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_home_user, container, false);
         ButterKnife.bind(this, v);
-        this.initViews();
         presenter = new UserPresenter(this);
-        presenter.getListJasa();
-
+        this.initViews();
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.maps_google);
         supportMapFragment.getMapAsync(this::onMapReady);
-
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(1000);
         locationRequest.setFastestInterval(5000);
@@ -105,8 +115,14 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
         sweetAlertDialog.setTitleText("Sedang Memuat ...");
         sweetAlertDialog.setCancelable(false);
 
-        findData.setVisibility(View.GONE);
-        findData.setOnClickListener(v -> {this.onGetListJasa();});
+        findData.setVisibility(View.VISIBLE);
+        findData.setOnClickListener(v -> {this.onGetListJasa(v);});
+
+        mListJasa.setVisibility(View.GONE);
+        mListJasa.setImageDrawable(CustomDrawable.googleMaterialDrawable(
+                getContext(), R.color.color_default_blue, 24, GoogleMaterial.Icon.gmd_list
+        ));
+        mListJasa.setOnClickListener(v -> this.onGetListJasa(v));
 
         mOrderFab.setImageDrawable(CustomDrawable.googleMaterialDrawable(
                 getContext(), R.color.color_default_blue, 24, GoogleMaterial.Icon.gmd_shopping_cart
@@ -116,12 +132,26 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
             startActivity(i);
             Animatoo.animateSlideRight(getActivity());
         });
+//        setMyLocation();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onDataReady(List<ListJasaModel> ListJasa) {
-        mListMarker = ListJasa;
+    public void onDataReady(List<User> ListJasa) {
+        Log.d("lokasigua", new Gson().toJson(myLocation));
+        List<User> dataFilter = new ArrayList<>();
+        for (User data : ListJasa){
+            LatLng from = new LatLng(
+                    Double.parseDouble(data.getLati()),
+                    Double.parseDouble(data.getLongi())
+            );
+            //untuk menghitung jarak
+            float mengambilJarak = Utils.distanceFromLBS(from, myLocation);
+            data.setDistance(mengambilJarak);
+            dataFilter.add(data);
+            Collections.sort(dataFilter, new User.Sortbyroll());
+        }
+        mListMarker = dataFilter;
         int height = 120;
         int width = 100;
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker_mobil);
@@ -138,6 +168,7 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
                                 .title(mTitles.get(i))
                                 .snippet(mListMarker.get(i).getAddress())
                                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+
                 HashMap<String, String> data = new HashMap<String, String>();
                 data.put("jasa_id",mListMarker.get(i).getId());
                 data.put("namaJasa",mListMarker.get(i).getFullname());
@@ -164,7 +195,7 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
                             startActivity(i);
                             Animatoo.animateSlideDown(getContext());
                         } else {
-                            Toast.makeText(getContext(), ""+marker.getTitle(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -180,15 +211,50 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
     }
 
     @Override
-    public void onNetworkError(String cause) {
-        Log.d("errornya", cause);
-        SweetDialogs.endpointError(getActivity());
+    public void onMapReady(GoogleMap googleMap) {
+        mMaps = googleMap;
 
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMaps.setMyLocationEnabled(true);
+        mMaps.getUiSettings().setMyLocationButtonEnabled(true);
+        mMaps.setOnMyLocationChangeListener(location -> {
+            if (location.getLatitude() != 0 && location.getLongitude() != 0) {
+                presenter.getListJasa();
+                LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
+                myLocation = lng;
+                if (myLocationMarker == null) {
+                    setMyLocation();
+                } else myLocationMarker.setPosition(myLocation);
+            }
+        });
+    }
+
+    public void zoomToLng(String Id) {
+        bottomSheetDialog.dismiss();
+        for (int i = 0; i < mListMarker.size(); i++) {
+            if (mListMarker.get(i).getId().equals(Id)) {
+                LatLng lng = new LatLng(
+                        Double.parseDouble(mListMarker.get(i).getLati()),
+                        Double.parseDouble(mListMarker.get(i).getLongi())
+                );
+                mMaps.animateCamera(CameraUpdateFactory.newLatLngZoom(lng, 18));
+            }
+        }
     }
 
     @Override
-    public void onGetListJasa() {
-        Toast.makeText(getActivity(), "adasdsadsad", Toast.LENGTH_SHORT).show();
+    public void onNetworkError(String cause) {
+        Log.d("errornya", cause);
+        SweetDialogs.endpointError(getActivity());
     }
 
     @Override
@@ -241,29 +307,21 @@ public class HomeFragmentUser extends Fragment implements IHomeUserView {
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMaps = googleMap;
+    public void onGetListJasa(View v){
+        bottomSheetDialog = new BottomSheetDialog(getActivity(),R.style.BottomSheetDialogTheme);
+        View bottomSheetView = LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.layout_bottom_sheet, (LinearLayout) v.findViewById(R.id.bottomsheetcontainer));
+        recyclerView = (RecyclerView) bottomSheetView.findViewById(R.id.mListJasa);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new ListJasaAdapter(mListMarker, getContext(), this);
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
+    }
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMaps.setMyLocationEnabled(true);
-        mMaps.getUiSettings().setMyLocationButtonEnabled(true);
-        mMaps.setOnMyLocationChangeListener(location -> {
-            if (location.getLatitude() != 0 && location.getLongitude() != 0) {
-                LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
-                myLocation = lng;
-                if (myLocationMarker == null) {
-                    setMyLocation();
-                } else myLocationMarker.setPosition(myLocation);
-            }
-        });
+    @Override
+    public void onSelect(User data) {
+        this.zoomToLng(data.getId());
     }
 }

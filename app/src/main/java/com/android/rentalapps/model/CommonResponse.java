@@ -23,4 +23,12 @@ public class CommonResponse {
     public void setmMsg(String mMsg) {
         this.mMsg = mMsg;
     }
+
+    public Boolean getSuccess() {
+        return mStatus;
+    }
+
+    public void setSuccess(Boolean mStatus) {
+        this.mStatus = mStatus;
+    }
 }

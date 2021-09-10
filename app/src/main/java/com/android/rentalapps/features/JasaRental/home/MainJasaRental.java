@@ -5,21 +5,17 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.android.rentalapps.features.JasaRental.account.AccountFragmentJasaRental;
 import com.android.rentalapps.R;
+import com.android.rentalapps.features.JasaRental.account.AccountFragmentJasaRental;
 import com.android.rentalapps.features.auth.model.User;
 import com.android.rentalapps.utils.App;
 import com.android.rentalapps.utils.GsonHelper;
 import com.android.rentalapps.utils.Prefs;
 import com.android.rentalapps.utils.Utils;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
@@ -30,9 +26,6 @@ public class MainJasaRental extends AppCompatActivity {
     FragmentManager fragmentManager;
     User profile;
     boolean BackPress = false;
-    private RequestQueue mRequestQueue;
-    private DrawerLayout drawer;
-    private ActionBarDrawerToggle mTogle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +33,6 @@ public class MainJasaRental extends AppCompatActivity {
         setContentView(R.layout.activity_main_jasa_rental);
 
         bottomNav = findViewById(R.id.bottom_nav);
-        mRequestQueue = Volley.newRequestQueue(this);
 
         profile = (User) GsonHelper.parseGson(
                 App.getPref().getString(Prefs.PREF_STORE_PROFILE, ""),

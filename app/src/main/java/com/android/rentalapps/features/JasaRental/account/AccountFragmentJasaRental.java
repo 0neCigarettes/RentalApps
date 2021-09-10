@@ -16,7 +16,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.android.rentalapps.R;
 import com.android.rentalapps.features.JasaRental.account.profile.UpdateJasaRental;
 import com.android.rentalapps.features.JasaRental.account.view.IAccountJasaView;
-import com.android.rentalapps.features.auth.Login;
+import com.android.rentalapps.features.auth.login.Login;
 import com.android.rentalapps.features.auth.model.User;
 import com.android.rentalapps.utils.App;
 import com.android.rentalapps.utils.GsonHelper;
@@ -103,7 +103,7 @@ public class AccountFragmentJasaRental extends Fragment implements IAccountJasaV
 
     @OnClick(R.id.customerCare)
     void onCall() {
-        final String phoneD = "082279058667";
+        final String phoneD = App.getApplication().getString(R.string.nomorAdmin);
         final String str1 = phoneD.replaceFirst("0", "+62");
         String url = "https://api.whatsapp.com/send?phone=" + str1;
         Intent i = new Intent(Intent.ACTION_VIEW);

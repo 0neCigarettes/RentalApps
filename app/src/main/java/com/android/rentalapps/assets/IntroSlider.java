@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.rentalapps.R;
-import com.android.rentalapps.features.auth.Login;
+import com.android.rentalapps.features.auth.login.Login;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

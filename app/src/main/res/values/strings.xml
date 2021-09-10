@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">RentalApps</string>
 
-    <string name="base_url">http://192.168.18.5/rental_web/public/api/</string>
-    <string name="img_url">http://192.168.18.5/rental_web/public/statics/img/</string>
+    <string name="base_url">http://192.168.43.204/rental_web/public/api/</string>
+    <string name="img_url">http://192.168.43.204/rental_web/public/statics/img/</string>
     <string name="lorem">Lorem Ipsum</string>
+    <string name="nomorAdmin">0895602315794</string>
     <string name="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, consectetur  consectetur adipiscing elit</string>
 
     <!-- TODO: Remove or change this placeholder text -->

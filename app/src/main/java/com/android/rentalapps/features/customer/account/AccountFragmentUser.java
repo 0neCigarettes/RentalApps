@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.rentalapps.R;
-import com.android.rentalapps.features.auth.Login;
+import com.android.rentalapps.features.auth.login.Login;
 import com.android.rentalapps.features.auth.model.User;
 import com.android.rentalapps.features.customer.account.ProfileUpdate.UpdateUser;
 import com.android.rentalapps.features.customer.account.view.IAccountUserView;
@@ -92,7 +92,7 @@ public class AccountFragmentUser extends Fragment implements IAccountUserView {
 
     @OnClick(R.id.customerCare)
     void onCustomerCare(){
-        final String phoneD = "082279058667";
+        final String phoneD = App.getApplication().getString(R.string.nomorAdmin);
         final String str1 = phoneD.replaceFirst("0", "+62");
         String url = "https://api.whatsapp.com/send?phone=" + str1;
         Intent i = new Intent(Intent.ACTION_VIEW);

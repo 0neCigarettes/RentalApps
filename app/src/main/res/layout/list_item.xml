@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/itemListDriver"
+    android:id="@+id/itemListJasa"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/mItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
@@ -22,7 +23,7 @@
             android:padding="10dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileDriverList"
+                android:id="@+id/mFoto"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
@@ -50,21 +51,21 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:id="@+id/fullnameList"
+                        android:id="@+id/fullname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Fullname Driver"
+                        android:text="fullname"
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/jarakDriverList"
+                        android:id="@+id/distance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="13 Km"
+                        android:text="-+ 13 Km"
                         android:textColor="#CAC9C9"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -96,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Nomor Plat"
+                        android:text="Alamat"
                         android:textColor="#CAC9C9"
                         android:textSize="12sp" />
 
@@ -109,7 +110,7 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:id="@+id/phoneDriverList"
+                        android:id="@+id/phone"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -118,11 +119,11 @@
                         android:textSize="13sp" />
 
                     <TextView
-                        android:id="@+id/platDriverList"
+                        android:id="@+id/alamat"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="BE 2626 CD"
+                        android:text="Jl antasari no 17 bandar lampung"
                         android:textColor="@color/black"
                         android:textSize="13sp" />
 

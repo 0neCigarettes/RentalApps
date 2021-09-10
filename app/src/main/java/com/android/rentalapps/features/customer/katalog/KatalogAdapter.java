@@ -44,7 +44,7 @@ public class KatalogAdapter extends RecyclerView.Adapter<KatalogAdapter.ViewHold
     public void onBindViewHolder(final KatalogAdapter.ViewHolder holder, final int position) {
         final ListMobil listMobil = listMobils.get(position);
         holder.mNamaMobil.setText(listMobil.getNamaMobil());
-        holder.mNamaMobil.setText(listMobil.getPlat());
+        holder.mPlat.setText(listMobil.getPlat());
         holder.mHarga.setText(Utils.convertRupiah(listMobil.getHarga()));
         if (listMobil.getImg() != null) {
             Picasso.get().load(App.getApplication().getString(R.string.img_url)  + listMobil.getImg()).into(holder.mFoto);

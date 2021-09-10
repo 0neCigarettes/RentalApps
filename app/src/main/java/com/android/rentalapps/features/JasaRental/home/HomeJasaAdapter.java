@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.rentalapps.features.JasaRental.home.model.OrderJasa;
 import com.android.rentalapps.R;
+import com.android.rentalapps.features.JasaRental.home.model.OrderJasa;
 import com.android.rentalapps.ui.SweetDialogs;
 import com.android.rentalapps.utils.App;
 import com.google.gson.Gson;
@@ -57,7 +57,7 @@ public class HomeJasaAdapter extends RecyclerView.Adapter<HomeJasaAdapter.ViewHo
         holder.mPhone.setText(listOrder.getmPhonePelanggan());
         holder.mNamaMobil.setText(listOrder.getmNamaMobil());
         holder.mCek.setOnClickListener(v -> {listener.onCek(listOrder);});
-        if(!listOrder.getmImgMobil().equals(null)){
+        if(listOrder.getmImgMobil() != null){
             Picasso.get().load(App.getApplication().getString(R.string.img_url) + listOrder.getmImgMobil()).into(holder.mFotoMobil);
         }
         if (listOrder.getmStatus().equals("1")){

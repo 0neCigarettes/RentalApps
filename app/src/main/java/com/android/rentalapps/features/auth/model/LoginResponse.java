@@ -29,8 +29,10 @@ public class LoginResponse {
     public User getmResult() {
         return mResult;
     }
-
     public void setmResult(User mResult) {
         this.mResult = mResult;
     }
+
+    public Boolean getSuccess() { return mStatus; }
+    public void  setSuccess(Boolean success) { mStatus = success; }
 }

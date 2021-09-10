@@ -1,6 +1,8 @@
 package com.android.rentalapps.features.customer.home.ViewHomeUser;
 
-import com.android.rentalapps.features.customer.home.Model.ListJasaModel;
+import android.view.View;
+
+import com.android.rentalapps.features.auth.model.User;
 import com.google.android.gms.maps.GoogleMap;
 
 import java.util.List;
@@ -15,9 +17,9 @@ public interface IHomeUserView {
 
     void onMapReady(GoogleMap googleMap);
 
-    void onDataReady(List<ListJasaModel> ListJasa);
+    void onDataReady(List<User> ListJasa);
 
-    void onGetListJasa();
+    void onGetListJasa(View v);
 
     void onNetworkError(String cause);
 

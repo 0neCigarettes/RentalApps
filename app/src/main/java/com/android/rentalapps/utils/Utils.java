@@ -4,7 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
@@ -57,6 +62,48 @@ public class Utils {
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         String IDR = kursIndonesia.format(Long.valueOf(val));
         return IDR;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    //Location Based Service
+    public static float distanceFromLBS(LatLng from, LatLng to) {
+        //gps location
+        Location loc1 = new Location("");
+        loc1.setLatitude(from.latitude);
+        loc1.setLongitude(from.longitude);
+
+        //destination location
+        Location loc2 = new Location("");
+        loc2.setLatitude(to.latitude);
+        loc2.setLongitude(to.longitude);
+        return (float) round((loc1.distanceTo(loc2)/1000),2);
+    }
+
+    public static double heversine (double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".features.auth.Login">
+    tools:context=".features.auth.login.Login">
 
     <View
         android:id="@+id/view"
@@ -228,6 +228,7 @@
             android:textColor="@color/black" />
 
         <TextView
+            android:id="@+id/mCs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

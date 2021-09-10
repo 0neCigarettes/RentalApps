@@ -4,12 +4,12 @@ import com.android.rentalapps.features.JasaRental.home.model.OrderResponse;
 import com.android.rentalapps.features.JasaRental.product.model.ProductModel;
 import com.android.rentalapps.features.JasaRental.product.model.ProductResponse;
 import com.android.rentalapps.features.auth.model.LoginResponse;
-import com.android.rentalapps.model.CommonResponse;
 import com.android.rentalapps.features.auth.model.User;
 import com.android.rentalapps.features.customer.home.Model.ListJasaResponse;
 import com.android.rentalapps.features.customer.katalog.model.ListMobilResponse;
 import com.android.rentalapps.features.customer.katalog.model.Order;
 import com.android.rentalapps.features.customer.order.model.MyOrderResponse;
+import com.android.rentalapps.model.CommonResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -21,6 +21,13 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface NetworkService {
+
+    //auth
+    @POST("login")
+    Call<LoginResponse> signin(@Body User model);
+
+    @POST("regis")
+    Call<CommonResponse> signup(@Body User model);
 
     //jasa
     @GET("jasa/product/{id}")

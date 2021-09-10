@@ -63,8 +63,6 @@ public class UpdateUser extends AppCompatActivity implements IProfileView {
 
     @BindView(R.id.dfullname)
     TextView mFullname;
-    @BindView(R.id.dnik)
-    TextView mNik;
     @BindView(R.id.fullname)
     TextInputEditText mFullnameUser;
     @BindView(R.id.phone)

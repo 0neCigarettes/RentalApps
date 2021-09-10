@@ -1,9 +1,9 @@
 package com.android.rentalapps.features.customer.home.Presenter;
 
-import com.android.rentalapps.server.NetworkService;
-import com.android.rentalapps.server.RestService;
 import com.android.rentalapps.features.customer.home.Model.ListJasaResponse;
 import com.android.rentalapps.features.customer.home.ViewHomeUser.IHomeUserView;
+import com.android.rentalapps.server.NetworkService;
+import com.android.rentalapps.server.RestService;
 import com.google.gson.Gson;
 
 import retrofit2.Call;

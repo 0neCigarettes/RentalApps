@@ -2,6 +2,8 @@ package com.android.rentalapps.features.auth.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Comparator;
+
 public class User {
 
     @SerializedName("id")
@@ -123,5 +125,27 @@ public class User {
 
     public void setLongi(String longi) {
         this.longi = longi;
+    }
+
+    private float distance;
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+
+    public static class Sortbyroll implements Comparator<User>
+    {
+        // Used for sorting in ascending order of
+        // roll number
+        public int compare(User a, User b)
+        {
+//            return (int) (a.getDistance() - b.getDistance());
+            return Float.valueOf(a.getDistance()).compareTo(Float.valueOf(b.getDistance()));
+        }
     }
 }

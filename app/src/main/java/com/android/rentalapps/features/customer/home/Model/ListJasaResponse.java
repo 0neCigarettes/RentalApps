@@ -1,5 +1,6 @@
 package com.android.rentalapps.features.customer.home.Model;
 
+import com.android.rentalapps.features.auth.model.User;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public class ListJasaResponse {
     @SerializedName("msg")
     private String mMsg;
     @SerializedName("result")
-    private List<ListJasaModel> mResult;
+    private List<User> mResult;
 
     public Boolean getmStatus() {
         return mStatus;
@@ -28,11 +29,11 @@ public class ListJasaResponse {
         this.mMsg = mMsg;
     }
 
-    public List<ListJasaModel> getmResult() {
+    public List<User> getmResult() {
         return mResult;
     }
 
-    public void setmResult(List<ListJasaModel> mResult) {
+    public void setmResult(List<User> mResult) {
         this.mResult = mResult;
     }
 }

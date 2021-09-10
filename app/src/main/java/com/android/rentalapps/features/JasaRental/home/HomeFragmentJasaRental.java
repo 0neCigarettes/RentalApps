@@ -79,7 +79,7 @@ public class HomeFragmentJasaRental extends Fragment implements IHomeJasaView, H
         );
 
         mNamaUser.setText(mProfile.getFullname());
-        if (mProfile.getProfilephoto() == null){
+        if (mProfile.getProfilephoto() != null){
             Picasso.get().load(App.getApplication().getString(R.string.img_url) + mProfile.getProfilephoto()).into(mPhotoprofileuser);
         }
         if (mProfile.getStatus().equals("on")) {
